@@ -26,13 +26,6 @@ class DiscountCardServiceImplTest {
     private DiscountCardServiceImpl discountCardService;
     @Mock
     private DiscountCardDAO discountCardDAO;
-    private List<DiscountCard> discountCards;
-
-    @BeforeEach
-    void setUp() {
-        discountCards = ShopTestBuilder.listOfCards();
-    }
-
 
     @Nested
     class Create {
@@ -70,7 +63,6 @@ class DiscountCardServiceImplTest {
         }
         @Test
         void checkCreateWithIdWhichAlreadyExistsShouldReturnNull() {
-
             Mockito.doReturn(null)
                     .when(discountCardDAO)
                     .save(dc);
@@ -169,6 +161,7 @@ class DiscountCardServiceImplTest {
         @Test
 //        @Disabled("Should be 10 values in DB")
         void checkFindAllShouldReturn10() {
+            List<DiscountCard> discountCards = ShopTestBuilder.listOfCards();
             int expectedLength = discountCards.size();
 
             Mockito.doReturn(discountCards)
@@ -189,7 +182,7 @@ class DiscountCardServiceImplTest {
 
     @Nested
     class Update {
-        DiscountCard dc;
+        private DiscountCard dc;
 
         @BeforeEach
         void tearDown() {

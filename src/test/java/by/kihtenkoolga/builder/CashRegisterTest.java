@@ -17,7 +17,7 @@ class CashRegisterTest {
     private CashRegisterDate cashRegisterDate =
             new CashRegisterDate(0.0,0.0, new ArrayList<>(), "",
                     ShopTestBuilder.defaultShop(),
-                    ShopTestBuilder.products,
+                    ShopTestBuilder.ALL_PRODUCTS,
                     "12312",
                     DiscountCardTestBuilder.aRealDiscountCard().build()
             );
@@ -25,10 +25,10 @@ class CashRegisterTest {
 
     @Test
     void checkCalculatePricesShouldReturnCorrectPriceAndOnDiscount() {
-        Double expectedPrice = ShopTestBuilder.products.entrySet().stream()
+        Double expectedPrice = ShopTestBuilder.ALL_PRODUCTS.entrySet().stream()
                 .map(pair -> pair.getKey().getPrice() * pair.getValue())
                 .reduce(0.0, Double::sum);
-        List<Product> expectedOnDiscount = ShopTestBuilder.products.entrySet().stream()
+        List<Product> expectedOnDiscount = ShopTestBuilder.ALL_PRODUCTS.entrySet().stream()
                 .filter(pair -> pair.getKey().isDiscount())
                 .map(pair -> pair.getKey())
                 .collect(Collectors.toList());

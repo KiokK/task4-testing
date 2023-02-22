@@ -6,7 +6,6 @@ import by.kihtenkoolga.service.ProductService;
 import by.kihtenkoolga.util.ProductTestBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -30,15 +29,8 @@ class ProductServiceImplTest {
 
     @Nested
     class Create {
-        private Product newProduct;
-        private Product expectedProduct;
 
-        @BeforeEach
-        void setUp() {
-            newProduct = ProductTestBuilder.aProduct().build();
-            expectedProduct = ProductTestBuilder.aProduct().withId(8L).build();
-        }
-
+        private Product expectedProduct = ProductTestBuilder.aProduct().withId(8L).build();
         @AfterEach
         void tearDown() {
             productService.delete(expectedProduct);
@@ -46,6 +38,8 @@ class ProductServiceImplTest {
 
         @Test
         void checkCreateNewProductWithoutId() {
+            Product newProduct = ProductTestBuilder.aProduct().build();
+
             Mockito.doReturn(expectedProduct)
                     .when(productDAO)
                     .save(newProduct);
@@ -58,15 +52,10 @@ class ProductServiceImplTest {
 
     @Nested
     class FindById {
-        private Product expectedProduct;
-
-        @BeforeEach
-        void setUp() {
-            expectedProduct = ProductTestBuilder.apple;
-        }
 
         @Test
         void checkFindByIdReturnId1() {
+            Product expectedProduct = ProductTestBuilder.APPLE;
             final Long REAL_ID = 1L;
             Mockito.doReturn(Optional.of(expectedProduct))
                     .when(productDAO)
@@ -90,23 +79,10 @@ class ProductServiceImplTest {
 
     @Nested
     class FindAll {
-        private List<Product> products;
-
-        @BeforeEach
-        void setUp() {
-            products = List.of(
-                    new Product(1L,"Apple", 1.0, (byte) 0),
-                    new Product(2L,"Pineapple", 10.0, (byte) 0),
-                    new Product(3L,"Milk", 1.0, (byte) 0),
-                    new Product(4L,"Chocolate Alpenhold", 2.3, (byte) 10),
-                    new Product(5L,"Water AURA", 50.0, (byte) 20),
-                    new Product(6L,"Chocolate Alenka", 2.0, (byte) 0),
-                    new Product(7L,"Plat", 10.3, (byte) 0)
-            );
-        }
 
         @Test
         void checkFindAllReturn7() {
+            List<Product> products = ProductTestBuilder.TESTS_PRODUCTS;
             Mockito.doReturn(products)
                     .when(productDAO)
                     .findAll();
@@ -116,6 +92,7 @@ class ProductServiceImplTest {
 
         @Test
         void checkFindAllReturnNo0() {
+            List<Product> products = ProductTestBuilder.TESTS_PRODUCTS;
             Mockito.doReturn(products)
                     .when(productDAO)
                     .findAll();
@@ -128,21 +105,15 @@ class ProductServiceImplTest {
     @Nested
     class Update {
 
-        private Product appleWithDisc10;
-
-        @BeforeEach
-        void setUp() {
-            appleWithDisc10 = ProductTestBuilder.aRealProductApple().withDiscountPercentage((byte) 10).build();
-        }
-
         @AfterEach
         void tearDown() {
-            productService.update(ProductTestBuilder.apple);
+            productService.update(ProductTestBuilder.APPLE);
         }
 
         @Test
         void checkUpdateReturnProductWithSameId() {
-            long expectedId = ProductTestBuilder.apple.getId();
+            Product appleWithDisc10 = ProductTestBuilder.APPLE_WITH_DISC_10;
+            long expectedId = ProductTestBuilder.APPLE.getId();
             productService.update(appleWithDisc10);
 
             Assertions.assertThat(appleWithDisc10.getId())
@@ -150,6 +121,7 @@ class ProductServiceImplTest {
         }
         @Test
         void checkUpdateReturnProductWithNewDiscount() {
+            Product appleWithDisc10 = ProductTestBuilder.APPLE_WITH_DISC_10;
             byte expectedDiscount = 10;
             productService.update(appleWithDisc10);
 
@@ -160,21 +132,17 @@ class ProductServiceImplTest {
 
     @Nested
     class Delete {
-        private Product dellProduct;
-
-        @BeforeEach
-        void setUp() {
-            dellProduct = productService.create(ProductTestBuilder.aProduct().build());
-        }
 
         @Test
         void checkDeleteRealObject() {
-            Product apple = ProductTestBuilder.apple;
+            Product apple = ProductTestBuilder.APPLE;
             productService.delete(apple);
             Mockito.verify(productDAO).delete(apple);
         }
         @Test
         void checkDeleteAfterCreate() {
+            Product dellProduct = productService.create(ProductTestBuilder.aProduct().build());
+
             productService.delete(dellProduct);
             Mockito.verify(productDAO).delete(dellProduct);
         }

@@ -8,6 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 public class ShopTestBuilder {
+
+    public static final Map<Product, Integer> ALL_PRODUCTS = Map.of(
+            new Product(1L,"Apple", 1.0, (byte) 0), 1,
+            new Product(2L,"Pineapple", 10.0, (byte) 0), 2,
+            new Product(3L,"Milk", 1.0, (byte) 0), 3,
+            new Product(4L,"Chocolate Alpenhold", 2.3, (byte) 10), 5,
+            new Product(5L,"Water AURA", 50.0, (byte) 20), 6,
+            new Product(6L,"Chocolate Alenka", 2.0, (byte) 0), 7,
+            new Product(7L,"Plat", 10.3, (byte) 0), 1
+    );
+
     public static Shop defaultShop() {
         return new Shop("GROSHIK", "Minsk, Surganova, 56", "+375660001233",
                 listOfCards());
@@ -26,14 +37,4 @@ public class ShopTestBuilder {
                 new DiscountCard(10L,9999L,"Kokolov I.A.")
         );
     }
-
-    public static Map<Product, Integer> products = Map.of(
-            new Product(1L,"Apple", 1.0, (byte) 0), 1,
-            new Product(2L,"Pineapple", 10.0, (byte) 0), 2,
-            new Product(3L,"Milk", 1.0, (byte) 0), 3,
-            new Product(4L,"Chocolate Alpenhold", 2.3, (byte) 10), 5,
-            new Product(5L,"Water AURA", 50.0, (byte) 20), 6,
-            new Product(6L,"Chocolate Alenka", 2.0, (byte) 0), 7,
-            new Product(7L,"Plat", 10.3, (byte) 0), 1
-    );
 }

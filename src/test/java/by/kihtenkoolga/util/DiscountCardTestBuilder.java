@@ -2,8 +2,6 @@ package by.kihtenkoolga.util;
 
 import by.kihtenkoolga.model.DiscountCard;
 
-import java.util.List;
-
 public class DiscountCardTestBuilder {
 
     public static final String DEFAULT_FIO = "Ivanov I.I.";
@@ -36,13 +34,6 @@ public class DiscountCardTestBuilder {
         return this;
     }
 
-
-    public DiscountCardTestBuilder but() {
-        return DiscountCardTestBuilder
-                .aDiscountCard()
-                .numberCard(DEFAULT_NUMBER)
-                .fio(DEFAULT_FIO);
-    }
     public DiscountCard build() {
         return new DiscountCard(id, numberCard, fio);
     }
